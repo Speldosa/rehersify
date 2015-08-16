@@ -26,6 +26,7 @@ inputFolder = "./input/"
 outputFolder = "./output/"
 outputFormat = "aif"
 temporaryFileName = "tmp.aif"
+temporaryMP3fileName = "tmp.mp3"
 volumeDownScale = 0.90
 
 
@@ -59,11 +60,11 @@ voicePlacementsList = []
 # Fill in all the files created above.
 for file in os.listdir(inputFolder):
     if file.endswith((".aif",".wav")):
-        songName,voiceInformationAndFileEnding=file.split(' @ ')
+        songName,voiceInformationAndFileEnding=file.split('@')
         voiceInformation,ending=voiceInformationAndFileEnding.split('.')
         # IF $ IS IN voiceInformation
-        if '$' in voiceInformation:
-        	voice,voicePlacement=voiceInformation.split(' $ ')
+        if '%' in voiceInformation:
+        	voice,voicePlacement=voiceInformation.split('%')
         	voicePlacementsList.append(voicePlacement)
         else:
         	voice = voiceInformation
@@ -154,17 +155,20 @@ def generateSoxCommands(volumeFactor,panFactor):
 			leftChannelMix = leftChannelMix + str(partCounter) + "v" + str(panning * volume * volumeDownScale)
 			panning = panFactorCalculator(panFactor,voicePlacementsList[b],numberOfUniqueVoicePlacementsForUniqueSongNamesList[uniqueSongCounter],"right")
 			rightChannelMix = rightChannelMix + str(partCounter) + "v" + str(panning * volume * volumeDownScale)
-	soxCommand = soxCommand + " \"" + outputFolder + songNamesList[a] + " - "
+	soxCommand = soxCommand + " \"" + outputFolder + songNamesList[a] + "@"
 	if volumeFactor == 1:
-		soxCommand = soxCommand + "Tutti "
+		soxCommand = soxCommand + "Tutti"
 	else: 
 		if volumeFactor == "mute":
-			soxCommand = soxCommand + "Sans "
+			soxCommand = soxCommand + "Sans_"
 		soxCommand = soxCommand + voiceNamesList[a]
 		if voiceNumbersList[a] is not 'NA':
 			soxCommand = soxCommand + "-" + voiceNumbersList[a]
 	soxCommand = soxCommand + "." + outputFormat + "\"" + " remix -p " + leftChannelMix + " " + rightChannelMix
 	soxCommandsList.append(soxCommand)
+	# soxCommand = "sox −−norm=−3 " + infile + " " + outfile
+	# soxCommandsList.append(soxCommand)
+
 
 #################################
 # Function: panFactorCalculator #
@@ -193,7 +197,36 @@ def panFactorCalculator(panFactor,currentVoicePlacement,numberOfUniqueVoicePlace
 def volumeCalculator(volumeFactor,numberOfPartsForSong):
 	volumeFactor = float(volumeFactor)
 	numberOfPartsForSong = float(numberOfPartsForSong)
-	return(volumeFactor**numberOfPartsForSong)
+	correctionFactor = 0
+	if numberOfPartsForSong == 1:
+		correctionFactor = 1
+	elif numberOfPartsForSong == 2:
+		correctionFactor = 0.60
+	elif numberOfPartsForSong == 3:
+		correctionFactor = 0.40
+	elif numberOfPartsForSong == 4:
+		correctionFactor = 0.25
+	elif numberOfPartsForSong == 5:
+		correctionFactor = 0.20
+	elif numberOfPartsForSong == 6:
+		correctionFactor = 0.15
+	elif numberOfPartsForSong == 7:
+		correctionFactor = 0.125
+	elif numberOfPartsForSong == 8:
+		correctionFactor = 0.10
+	elif numberOfPartsForSong == 9:
+		correctionFactor = 0.10
+	elif numberOfPartsForSong == 10:
+		correctionFactor = 0.10
+	elif numberOfPartsForSong == 11:
+		correctionFactor = 0.10
+	elif numberOfPartsForSong == 12:
+		correctionFactor = 0.10
+	elif numberOfPartsForSong == 13:
+		correctionFactor = 0.10
+	elif numberOfPartsForSong == 14:
+		correctionFactor = 0.10
+	return(volumeFactor*correctionFactor)
 
 # 4.1 Go through each individual song.
 soxCommandsList = []
@@ -204,7 +237,7 @@ for uniqueSong in uniqueSongNamesList:
 	# 4.1 Create individual rehersal files for each voice of the song where the voice in question is higher than the others.
 	for a in range(0,len(fileNamesList)):
 		if songNamesList[a] == uniqueSong:
-			generateSoxCommands(0.6,0)
+			generateSoxCommands(0.60,0)
 			
 	# 4.2 Create individual rehersal files for each voice of the song where the voice in question is muted.
 	for a in range(0,len(fileNamesList)):
@@ -222,10 +255,27 @@ for uniqueSong in uniqueSongNamesList:
 # Uncomment the line below to print all the generated Sox commands.
 # print("\n".join(soxCommandsList))
 for soxCommand in soxCommandsList:
- 	print(soxCommand)
- 	os.system(soxCommand)
+	print(soxCommand)
+	os.system(soxCommand)
 
 
 ##############################
 ### 6. Normalize all files ###
 ##############################
+for file in os.listdir(outputFolder):
+    if file.endswith((".aif",".wav")):
+    	soxCommand = "sox --norm=-3 \"" + outputFolder + file + "\" \"" + outputFolder + temporaryFileName + "\""
+    	os.system(soxCommand)
+    	os.remove(outputFolder + file)
+    	os.rename(outputFolder + temporaryFileName, outputFolder + file)
+
+###################################
+### 7. Convert all files to mp3 ###
+###################################
+for file in os.listdir(outputFolder):
+    if file.endswith((".aif",".wav")):
+    	fileName,fileEnding=file.split('.')
+    	lameCommand = "lame -V2 \"" + outputFolder + file + "\" \"" + outputFolder + fileName + ".mp3" + "\""
+    	os.system(lameCommand)
+    	os.remove(outputFolder + file)
+

@@ -11,12 +11,12 @@ Martin Larsson, to.martin.larsson@gmail.com, [www.martinlarsson.net](http://www.
 GNU Gen­eral Public Li­cense, ver­sion 3
 
 # Description
-This is rehersify, a small [python](https://www.python.org) script that uses [SoX](http://sox.sourceforge.net/) to create rehersal music files out of individual music files containing single voices.
+This is rehersify, a small [python](https://www.python.org) script that uses [SoX](http://sox.sourceforge.net/) and [lame](http://lame.sourceforge.net/) to create rehersal music files out of individual music files containing single voices.
 
 The program is in the Alpha stage, meaning that the feature set is extremely limited, that the customization options are non-existent, that the program is prone to break if not used exactly as intended, and that this readme file is incredibly sparse. However, given that one follows the instructions, it should be usable.
 
 # Dependencies
-In order to run this script you need [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)), [Python](https://www.python.org) and [Sox](http://sox.sourceforge.net/) installed and ready to go.
+In order to run this script you need [Python](https://www.python.org), [Sox](http://sox.sourceforge.net/), and [lame](http://lame.sourceforge.net/) installed and ready to go.
 
 # Basic usage
 ## Input files
@@ -31,6 +31,13 @@ When you've placed your input files in the input folder, use the Terminal to nav
 	python rehersify.py
 
 ## Change log
+### alpha 0.3 (released 2015-08-16)
+- Bug fixes.
+- Changed the syntax of input files.
+- Added a normalization process at the end to all the output files.
+- Tweaked volume parameters.
+- Added a final step where all output files are converted to mp3 files with the help of [lame](http://lame.sourceforge.net/).
+
 ### alpha 0.2 (released 2015-07-12)
 - Implemented a behind the scenes function so that every input file is converted to a mono file (regardless if it already is a mono file or not).
 - Added an automatic scaling to avoid clipping in the final mix.
