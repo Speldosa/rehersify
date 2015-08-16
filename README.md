@@ -1,5 +1,5 @@
 # Name
-Rehersify
+rehersify
 
 # Version
 alpha 0.3 (released 2015-08-16)
