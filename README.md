@@ -20,10 +20,10 @@ In order to run this script you need [Python](https://www.python.org), [Sox](htt
 
 # Basic usage
 ## Input files
-Input files should be named "This is the songs name @ voice $ voicePlacement" (the ' $ voicePlacement' option is optional) and placed in the folder 'input'. Input formats that are accepted are wav and aif. The voice placement command tells the program in what order the different parts should be placed in stereo space. Lower numbers are placed more to the left and higher numbers are placed more to the right. Counting starts at "1".
+Input files should be named "This is the songs name@voice%voicePlacement" (the '%voicePlacement' option is optional) and placed in the folder 'input'. Input formats that are accepted are wav and aif. The voice placement command tells the program in what order the different parts should be placed in stereo space. Lower numbers are placed more to the left and higher numbers are placed more to the right. Counting starts at "1".
 
 ## Output files
-Output files are generated in the 'output' folder. Output files have the format 'aif'.
+Output files are generated in the 'output' folder. Output files have the format 'mp3'.
 
 ## Operation
 When you've placed your input files in the input folder, use the Terminal to navigate to the folder where you've placed the program and type
