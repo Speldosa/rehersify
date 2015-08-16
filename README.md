@@ -2,7 +2,7 @@
 Rehersify
 
 # Version
-alpha 0.2 (released 2015-07-12)
+alpha 0.3 (released 2015-08-16)
 
 # Author
 Martin Larsson, to.martin.larsson@gmail.com, [www.martinlarsson.net](http://www.martinlarsson.net).
