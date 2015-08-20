@@ -12,6 +12,7 @@
 #		4.4 Create tutti file.
 # 5. Run sox commands.
 # 6. Normalize all files.
+# 7. Convert all files to mp3.
 
 #####################################
 ### 0. Import necessary libraries ###
@@ -160,10 +161,12 @@ def generateSoxCommands(volumeFactor,panFactor):
 		soxCommand = soxCommand + "Tutti"
 	else: 
 		if volumeFactor == "mute":
-			soxCommand = soxCommand + "Sans_"
+			soxCommand = soxCommand + "-"
+		else:
+			soxCommand = soxCommand + "+"
 		soxCommand = soxCommand + voiceNamesList[a]
 		if voiceNumbersList[a] is not 'NA':
-			soxCommand = soxCommand + "-" + voiceNumbersList[a]
+			soxCommand = soxCommand + voiceNumbersList[a]
 	soxCommand = soxCommand + "." + outputFormat + "\"" + " remix -p " + leftChannelMix + " " + rightChannelMix
 	soxCommandsList.append(soxCommand)
 	# soxCommand = "sox −−norm=−3 " + infile + " " + outfile

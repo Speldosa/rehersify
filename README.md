@@ -2,7 +2,7 @@
 rehersify
 
 # Version
-alpha 0.3 (released 2015-08-16)
+alpha 0.4 (released 2015-08-21)
 
 # Author
 Martin Larsson, to.martin.larsson@gmail.com, [www.martinlarsson.net](http://www.martinlarsson.net).
@@ -31,6 +31,9 @@ When you've placed your input files in the input folder, use the Terminal to nav
 	python rehersify.py
 
 ## Change log
+### alpha 0.4 (released 2015-08-21)
+- Changed the naming of output files.
+
 ### alpha 0.3 (released 2015-08-16)
 - Bug fixes.
 - Changed the syntax of input files.
