@@ -31,8 +31,9 @@ When you've placed your input files in the input folder, use the Terminal to nav
 	python rehersify.py
 
 ## Change log
-### alpha 0.4 (released 2015-08-21)
+### alpha 0.4 (released 2015-08-23)
 - Changed the naming of output files.
+- Bug fixes.
 
 ### alpha 0.3 (released 2015-08-16)
 - Bug fixes.

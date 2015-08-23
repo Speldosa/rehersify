@@ -63,7 +63,7 @@ for file in os.listdir(inputFolder):
     if file.endswith((".aif",".wav")):
         songName,voiceInformationAndFileEnding=file.split('@')
         voiceInformation,ending=voiceInformationAndFileEnding.split('.')
-        # IF $ IS IN voiceInformation
+        # IF % IS IN voiceInformation
         if '%' in voiceInformation:
         	voice,voicePlacement=voiceInformation.split('%')
         	voicePlacementsList.append(voicePlacement)
@@ -157,7 +157,7 @@ def generateSoxCommands(volumeFactor,panFactor):
 			panning = panFactorCalculator(panFactor,voicePlacementsList[b],numberOfUniqueVoicePlacementsForUniqueSongNamesList[uniqueSongCounter],"right")
 			rightChannelMix = rightChannelMix + str(partCounter) + "v" + str(panning * volume * volumeDownScale)
 	soxCommand = soxCommand + " \"" + outputFolder + songNamesList[a] + "@"
-	if volumeFactor == 1:
+	if volumeFactor == "tutti":
 		soxCommand = soxCommand + "Tutti"
 	else: 
 		if volumeFactor == "mute":
@@ -198,6 +198,8 @@ def panFactorCalculator(panFactor,currentVoicePlacement,numberOfUniqueVoicePlace
 # Function: volumeCalculator #
 ##############################
 def volumeCalculator(volumeFactor,numberOfPartsForSong):
+	if volumeFactor == "tutti":
+		return(1)
 	volumeFactor = float(volumeFactor)
 	numberOfPartsForSong = float(numberOfPartsForSong)
 	correctionFactor = 0
@@ -234,6 +236,7 @@ def volumeCalculator(volumeFactor,numberOfPartsForSong):
 # 4.1 Go through each individual song.
 soxCommandsList = []
 uniqueSongCounter = -1
+tuttiCreated = []
 # Loop for each unique song.
 for uniqueSong in uniqueSongNamesList:
 	uniqueSongCounter = uniqueSongCounter + 1
@@ -245,12 +248,14 @@ for uniqueSong in uniqueSongNamesList:
 	# 4.2 Create individual rehersal files for each voice of the song where the voice in question is muted.
 	for a in range(0,len(fileNamesList)):
 		if songNamesList[a] == uniqueSong:
-			generateSoxCommands("mute",1)
+			generateSoxCommands("mute",0.8)
 
 	# 4.3 Create a tutti file of the song.
 	for a in range(0,len(fileNamesList)):
 		if songNamesList[a] == uniqueSong:
-			generateSoxCommands(1,0.8)
+			if uniqueSong not in tuttiCreated:
+				tuttiCreated.append(uniqueSong)
+				generateSoxCommands("tutti",0.8)
 	
 ###########################
 ### 5. Run sox commands ###
