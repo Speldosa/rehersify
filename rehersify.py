@@ -406,7 +406,8 @@ class CLASS_do_post_processing():
 ############################
 # Function to extract a column from the table constructs that are used in this program.
 def extract_column_from_table(table, column):
-	if isinstance(column, basestring):
+	# str was earlier basestring, but this function broke under newer versions of Python.
+	if isinstance(column, str):
 		tmp = []
 		for a in range(1,(len(table))):
 			tmp.append(table[a][table[0].index(column)])
