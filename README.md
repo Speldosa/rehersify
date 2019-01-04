@@ -2,7 +2,7 @@
 rehersify
 
 # Version
-alpha 0.5 (released 2017-XX-XX)
+alpha 0.5 (released 2019-01-05)
 
 # Author
 Martin Asperholm, martin.asperholm@gmail.com, [www.asperholm.net](http://www.asperholm.net).
@@ -34,7 +34,7 @@ When you've placed your input files in the input folder, use the Terminal to nav
 	python rehersify.py
 
 ## Change log
-### alpha 0.5 (released 2017-XX-XX)
+### alpha 0.5 (released 2019-01-05)
 - Made it so that voices that belongs to the same voice group together have the same volume (when not being the primary rehersal voice of the file) if you assume that they are uncorrelated and have the same input volume.
 - Added rehersal files where the voice in question is placed to the left in the stereo field with the other voices placed to the right.
 - Cleaned up and optimized the code in general.
